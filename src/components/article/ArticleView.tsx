@@ -1,4 +1,4 @@
-import { demoArticles } from "@/lib/demoArticles";
+import { demoArticles } from "@/lib/src/lib/demoArticles";
 console.log("DEMO ARTICLES IDS:", demoArticles.map(a => a.id).join(", "));
 
 
@@ -47,7 +47,7 @@ export default function ArticleView({ id }: { id: string }) {
       </div>
 
       <div className="mt-8 prose prose-slate max-w-none">
-        {article.content.split("\n").map((line, i) =>
+        {article.body?.split("\n").map((line, i) =>
           line.trim() === "" ? <br key={i} /> : <p key={i}>{line}</p>
         )}
       </div>
