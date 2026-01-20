@@ -1,4 +1,5 @@
-import { demoArticles } from "@/lib/src/lib/demoArticles";
+import { demoArticles } from "@/lib/demoArticles";
+
 console.log("DEMO ARTICLES IDS:", demoArticles.map(a => a.id).join(", "));
 
 
