@@ -1,40 +1,53 @@
-import { createClient } from "@supabase/supabase-js";
+// src/lib/demoArticles.ts
 
-export type Article = {
+export type DemoArticle = {
   id: string;
   title: string;
-  tag: string | null;
-  tag_colour: string | null;
-  release_date: string | null;
-  cover_kind: string | null;
-  bias_value: number | null;
-  body: string | null;
-  created_at: string | null;
+  tag?: string | null;
+  tagColour?: string | null;
+  releaseDate?: string | null;
+  coverKind?: string | null;
+  biasValue?: number | null;
+  body?: string | null;
+
+  // optional (if you use these in ArticleView)
+  isPremium?: boolean;
+  priceLabel?: string | null;
+  up?: number;
+  down?: number;
 };
 
-function supabaseServer() {
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
-}
+export const demoArticles: DemoArticle[] = [
+  {
+    id: "t2",
+    title: "Demo title 2",
+    tag: "technology",
+    tagColour: "blue",
+    releaseDate: "jan 7",
+    coverKind: "monitor",
+    biasValue: 0.5,
+    body: "this is text",
+    isPremium: false,
+    priceLabel: null,
+    up: 0,
+    down: 0,
+  },
+  {
+    id: "t3",
+    title: "Demo title 3",
+    tag: "science",
+    tagColour: "green",
+    releaseDate: "jan 8",
+    coverKind: "microscope",
+    biasValue: 0.5,
+    body: "hello",
+    isPremium: false,
+    priceLabel: null,
+    up: 0,
+    down: 0,
+  },
+];
 
-export async function getArticleById(id: string): Promise<Article | null> {
-  const supabase = supabaseServer();
-
-  const { data, error } = await supabase
-    .from("articles")
-    .select(
-      "id,title,tag,tag_colour,release_date,cover_kind,bias_value,body,created_at"
-    )
-    .eq("id", id)
-    // IMPORTANT: avoids PGRST116 when 0 rows match
-    .maybeSingle<Article>();
-
-  if (error) {
-    console.error("getArticleById error:", error);
-    return null;
-  }
-
-  return data ?? null;
+export function getDemoArticleById(id: string) {
+  return demoArticles.find((a) => a.id === id) ?? null;
 }
